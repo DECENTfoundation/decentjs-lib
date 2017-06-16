@@ -56,7 +56,6 @@
     "deep-equal": "^1.0.1",
     "ecurve": "^1.0.2",
     "event-emitter": "^0.3.4",
-    "decentjs-ws": "git+ssh://git@github.com/DECENTfoundation/decentjs-ws",
     "immutable": "^3.7.6",
     "secure-random": "^1.1.1"
   },
