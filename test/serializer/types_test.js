@@ -7,7 +7,7 @@ import th from './test_helper';
 
 import { is } from "immutable";
 import { PublicKey, PrivateKey, types } from "../../lib";
-import { ChainConfig } from "graphenejs-ws";
+import { ChainConfig } from "../../lib/ws";
 
 describe("types", function() {
 

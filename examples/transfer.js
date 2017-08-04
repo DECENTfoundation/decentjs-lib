@@ -1,4 +1,4 @@
-import {Apis} from "graphenejs-ws";
+import {Apis} from "../lib/ws";
 import {ChainStore, FetchChain, PrivateKey, TransactionHelper, Aes, TransactionBuilder} from "../lib";
 
 var privKey = "5KBuq5WmHvgePmB7w3onYsqLM8ESomM2Ae7SigYuuwg8MDHW7NN";

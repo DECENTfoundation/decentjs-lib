@@ -1,5 +1,5 @@
 import assert from "assert";
-import {Apis, ChainConfig} from "graphenejs-ws";
+import {Apis, ChainConfig} from "../../lib/ws";
 import { FetchChain, ChainStore } from "../../lib";
 
 var coreAsset;
