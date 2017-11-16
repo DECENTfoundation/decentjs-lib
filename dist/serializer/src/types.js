@@ -24,7 +24,7 @@ var _ObjectId2 = _interopRequireDefault(_ObjectId);
 
 var _ecc = require('../../ecc');
 
-var _ws = require('../../ws');
+var _cjs = require('../../ws/cjs');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -867,7 +867,7 @@ Types.public_key = {
         var debug = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
         if (debug.use_default && object === undefined) {
-            return _ws.ChainConfig.address_prefix + "859gxfnXyUriMgUeThh1fWv3oqcpLFyHa3TfFYC4PK2HqhToVM";
+            return _cjs.ChainConfig.address_prefix + "859gxfnXyUriMgUeThh1fWv3oqcpLFyHa3TfFYC4PK2HqhToVM";
         }
         _SerializerValidation2.default.required(object);
         return object.toString();
@@ -899,7 +899,7 @@ Types.address = {
         var debug = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
         if (debug.use_default && object === undefined) {
-            return _ws.ChainConfig.address_prefix + "664KmHxSuQyDsfwo4WEJvWpzg1QKdg67S";
+            return _cjs.ChainConfig.address_prefix + "664KmHxSuQyDsfwo4WEJvWpzg1QKdg67S";
         }
         return Types.address._to_address(object).toString();
     },

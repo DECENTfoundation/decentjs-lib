@@ -8,7 +8,7 @@ var _immutable = require("immutable");
 
 var _immutable2 = _interopRequireDefault(_immutable);
 
-var _ws = require("../../ws");
+var _cjs = require("../../ws/cjs");
 
 var _ChainTypes = require("./ChainTypes");
 
@@ -126,7 +126,7 @@ var ChainStore = function () {
 
       var reconnectCounter = 0;
       var _init = function _init(resolve, reject) {
-         var db_api = _ws.Apis.instance().db_api();
+         var db_api = _cjs.Apis.instance().db_api();
          if (!db_api) {
             return reject(new Error("Api not found, please initialize the api instance before calling the ChainStore"));
          }
@@ -148,7 +148,7 @@ var ChainStore = function () {
                   _this.progress = progress_delta / (now - start);
 
                   if (delta < 60) {
-                     _ws.Apis.instance().db_api().exec("set_subscribe_callback", [_this.onUpdate.bind(_this), true]).then(function (v) {
+                     _cjs.Apis.instance().db_api().exec("set_subscribe_callback", [_this.onUpdate.bind(_this), true]).then(function (v) {
                         console.log("synced and subscribed, chainstore ready");
                         _this.subscribed = true;
                         resolve();
@@ -337,7 +337,7 @@ var ChainStore = function () {
 
       if (asset_id === true) return undefined;
 
-      _ws.Apis.instance().db_api().exec("lookup_asset_symbols", [[id_or_symbol]]).then(function (asset_objects) {
+      _cjs.Apis.instance().db_api().exec("lookup_asset_symbols", [[id_or_symbol]]).then(function (asset_objects) {
          // console.log( "lookup symbol ", id_or_symbol )
          if (asset_objects.length && asset_objects[0]) _this3._updateObject(asset_objects[0], true);else {
             _this3.assets_by_symbol = _this3.assets_by_symbol.set(id_or_symbol, null);
@@ -369,7 +369,7 @@ var ChainStore = function () {
 
       if (this.get_account_refs_of_keys_calls.has(key)) return this.account_ids_by_key.get(key);else {
          this.get_account_refs_of_keys_calls = this.get_account_refs_of_keys_calls.add(key);
-         _ws.Apis.instance().db_api().exec("get_key_references", [[key]]).then(function (vec_account_id) {
+         _cjs.Apis.instance().db_api().exec("get_key_references", [[key]]).then(function (vec_account_id) {
             var refs = _immutable2.default.Set();
             vec_account_id = vec_account_id[0];
             refs = refs.withMutations(function (r) {
@@ -407,7 +407,7 @@ var ChainStore = function () {
           * having to update them / merge them or index them in updateObject.
           */
          this.balance_objects_by_address = this.balance_objects_by_address.set(address, _immutable2.default.Set());
-         _ws.Apis.instance().db_api().exec("get_balance_objects", [[address]]).then(function (balance_objects) {
+         _cjs.Apis.instance().db_api().exec("get_balance_objects", [[address]]).then(function (balance_objects) {
             var set = new Set();
             for (var i = 0; i < balance_objects.length; ++i) {
                _this5._updateObject(balance_objects[i]);
@@ -457,7 +457,7 @@ var ChainStore = function () {
          // the fetch
          if (DEBUG) console.log("fetching object: ", id);
          this.objects_by_id = this.objects_by_id.set(id, true);
-         _ws.Apis.instance().db_api().exec("get_objects", [[id]]).then(function (optional_objects) {
+         _cjs.Apis.instance().db_api().exec("get_objects", [[id]]).then(function (optional_objects) {
             //if(DEBUG) console.log('... optional_objects',optional_objects ? optional_objects[0].id : null)
             for (var _i = 0; _i < optional_objects.length; _i++) {
                var optional_object = optional_objects[_i];
@@ -650,7 +650,7 @@ var ChainStore = function () {
       var _this9 = this;
 
       return new Promise(function (resolve, reject) {
-         _ws.Apis.instance().db_api().exec("get_witness_by_account", [account_id]).then(function (optional_witness_object) {
+         _cjs.Apis.instance().db_api().exec("get_witness_by_account", [account_id]).then(function (optional_witness_object) {
             if (optional_witness_object) {
                _this9.witness_by_account_id = _this9.witness_by_account_id.set(optional_witness_object.witness_account, optional_witness_object.id);
                var witness_object = _this9._updateObject(optional_witness_object, true);
@@ -673,7 +673,7 @@ var ChainStore = function () {
       var _this10 = this;
 
       return new Promise(function (resolve, reject) {
-         _ws.Apis.instance().db_api().exec("get_committee_member_by_account", [account_id]).then(function (optional_committee_object) {
+         _cjs.Apis.instance().db_api().exec("get_committee_member_by_account", [account_id]).then(function (optional_committee_object) {
             if (optional_committee_object) {
                _this10.committee_by_account_id = _this10.committee_by_account_id.set(optional_committee_object.committee_member_account, optional_committee_object.id);
                var committee_object = _this10._updateObject(optional_committee_object, true);
@@ -719,7 +719,7 @@ var ChainStore = function () {
       if (!this.fetching_get_full_accounts.has(name_or_id) || Date.now() - this.fetching_get_full_accounts.get(name_or_id) > 5000) {
          this.fetching_get_full_accounts.set(name_or_id, Date.now());
          //console.log( "FETCHING FULL ACCOUNT: ", name_or_id )
-         _ws.Apis.instance().db_api().exec("get_full_accounts", [[name_or_id], true]).then(function (results) {
+         _cjs.Apis.instance().db_api().exec("get_full_accounts", [[name_or_id], true]).then(function (results) {
             if (results.length === 0) {
                if (_ChainValidation2.default.is_object_id(name_or_id)) {
                   _this11.objects_by_id = _this11.objects_by_id.set(name_or_id, null);
@@ -868,7 +868,7 @@ var ChainStore = function () {
       var start = "1." + op_history + ".0";
 
       pending_request.promise = new Promise(function (resolve, reject) {
-         _ws.Apis.instance().history_api().exec("get_account_history", [account_id, "", most_recent, limit, start]).then(function (operations) {
+         _cjs.Apis.instance().history_api().exec("get_account_history", [account_id, "", most_recent, limit, start]).then(function (operations) {
             var current_account = _this12.objects_by_id.get(account_id);
             var current_history = current_account.get('history');
             if (!current_history) current_history = _immutable2.default.List();
@@ -1169,7 +1169,7 @@ var ChainStore = function () {
 
       if (missing.length) {
          // we may need to fetch some objects
-         _ws.Apis.instance().db_api().exec("lookup_vote_ids", [missing]).then(function (vote_obj_array) {
+         _cjs.Apis.instance().db_api().exec("lookup_vote_ids", [missing]).then(function (vote_obj_array) {
             console.log("missing ===========> ", missing);
             console.log("vote objects ===========> ", vote_obj_array);
             for (var _i2 = 0; _i2 < vote_obj_array.length; ++_i2) {

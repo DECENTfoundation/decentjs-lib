@@ -12,7 +12,7 @@ var _bs = require('bs58');
 
 var _hash = require('./hash');
 
-var _ws = require('../../ws');
+var _cjs = require('../../ws/cjs');
 
 var _assert = require('assert');
 
@@ -78,7 +78,7 @@ var PublicKey = function () {
 
 
     PublicKey.prototype.toString = function toString() {
-        var address_prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _ws.ChainConfig.address_prefix;
+        var address_prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _cjs.ChainConfig.address_prefix;
 
         return this.toPublicKeyString(address_prefix);
     };
@@ -90,7 +90,7 @@ var PublicKey = function () {
 
 
     PublicKey.prototype.toPublicKeyString = function toPublicKeyString() {
-        var address_prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _ws.ChainConfig.address_prefix;
+        var address_prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _cjs.ChainConfig.address_prefix;
 
         var pub_buf = this.toBuffer();
         var checksum = (0, _hash.ripemd160)(pub_buf);
@@ -106,7 +106,7 @@ var PublicKey = function () {
 
 
     PublicKey.fromPublicKeyString = function fromPublicKeyString(public_key) {
-        var address_prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _ws.ChainConfig.address_prefix;
+        var address_prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _cjs.ChainConfig.address_prefix;
 
         try {
             return PublicKey.fromStringOrThrow(public_key, address_prefix);
@@ -124,7 +124,7 @@ var PublicKey = function () {
 
 
     PublicKey.fromStringOrThrow = function fromStringOrThrow(public_key) {
-        var address_prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _ws.ChainConfig.address_prefix;
+        var address_prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _cjs.ChainConfig.address_prefix;
 
         var prefix = public_key.slice(0, address_prefix.length);
         _assert2.default.equal(address_prefix, prefix, 'Expecting key to begin with ' + address_prefix + ', instead got ' + prefix);
@@ -143,7 +143,7 @@ var PublicKey = function () {
     };
 
     PublicKey.prototype.toAddressString = function toAddressString() {
-        var address_prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _ws.ChainConfig.address_prefix;
+        var address_prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _cjs.ChainConfig.address_prefix;
 
         var pub_buf = this.toBuffer();
         var pub_sha = (0, _hash.sha512)(pub_buf);

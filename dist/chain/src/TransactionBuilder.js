@@ -10,7 +10,7 @@ var _ecc = require("../../ecc");
 
 var _serializer = require("../../serializer");
 
-var _ws = require("../../ws");
+var _cjs = require("../../ws/cjs");
 
 var _ChainTypes = require("./ChainTypes");
 
@@ -64,7 +64,7 @@ var TransactionBuilder = function () {
 
 
         var wallet_object = cwallet.wallet.wallet_object;
-        if (_ws.Apis.instance().chain_id !== wallet_object.get("chain_id")) return Promise.reject("Mismatched chain_id; expecting " + wallet_object.get("chain_id") + ", but got " + _ws.Apis.instance().chain_id);
+        if (_cjs.Apis.instance().chain_id !== wallet_object.get("chain_id")) return Promise.reject("Mismatched chain_id; expecting " + wallet_object.get("chain_id") + ", but got " + _cjs.Apis.instance().chain_id);
 
         return this.set_required_fees().then(function () {
             var signer_pubkeys_added = {};
@@ -152,9 +152,9 @@ var TransactionBuilder = function () {
                 throw new Error("already finalized");
             }
 
-            resolve(_ws.Apis.instance().db_api().exec("get_objects", [["2.1.0"]]).then(function (r) {
+            resolve(_cjs.Apis.instance().db_api().exec("get_objects", [["2.1.0"]]).then(function (r) {
                 head_block_time_string = r[0].time;
-                if (_this2.expiration === 0) _this2.expiration = base_expiration_sec() + _ws.ChainConfig.expire_in_secs;
+                if (_this2.expiration === 0) _this2.expiration = base_expiration_sec() + _cjs.ChainConfig.expire_in_secs;
                 _this2.ref_block_num = r[0].head_block_number & 0xFFFF;
                 _this2.ref_block_prefix = new Buffer(r[0].head_block_id, 'hex').readUInt32LE(4);
                 //DEBUG console.log("ref_block",@ref_block_num,@ref_block_prefix,r)
@@ -275,9 +275,9 @@ var TransactionBuilder = function () {
                     requiresReview = true;
                 }
             });
-            operation.expiration_time || (operation.expiration_time = base_expiration_sec() + _ws.ChainConfig.expire_in_secs_proposal);
+            operation.expiration_time || (operation.expiration_time = base_expiration_sec() + _cjs.ChainConfig.expire_in_secs_proposal);
             if (requiresReview) {
-                operation.review_period_seconds = extraReview + Math.max(committee_min_review, 24 * 60 * 60 || _ws.ChainConfig.review_in_secs_committee);
+                operation.review_period_seconds = extraReview + Math.max(committee_min_review, 24 * 60 * 60 || _cjs.ChainConfig.review_in_secs_committee);
                 /*
                 * Expiration time must be at least equal to
                 * now + review_period_seconds, so we add one hour to make sure
@@ -292,7 +292,7 @@ var TransactionBuilder = function () {
     /* optional: fetch the current head block */
 
     TransactionBuilder.prototype.update_head_block = function update_head_block() {
-        return Promise.all([_ws.Apis.instance().db_api().exec("get_objects", [["2.0.0"]]), _ws.Apis.instance().db_api().exec("get_objects", [["2.1.0"]])]).then(function (res) {
+        return Promise.all([_cjs.Apis.instance().db_api().exec("get_objects", [["2.0.0"]]), _cjs.Apis.instance().db_api().exec("get_objects", [["2.1.0"]])]).then(function (res) {
             var g = res[0],
                 r = res[1];
 
@@ -377,13 +377,13 @@ var TransactionBuilder = function () {
             }
         }
 
-        var promises = [_ws.Apis.instance().db_api().exec("get_required_fees", [operations, asset_id])];
+        var promises = [_cjs.Apis.instance().db_api().exec("get_required_fees", [operations, asset_id])];
 
         var feeAssetPromise = null;
         if (asset_id !== "1.3.0") {
             // This handles the fallback to paying fees in BTS if the fee pool is empty.
-            promises.push(_ws.Apis.instance().db_api().exec("get_required_fees", [operations, "1.3.0"]));
-            promises.push(_ws.Apis.instance().db_api().exec("get_objects", [[asset_id]]));
+            promises.push(_cjs.Apis.instance().db_api().exec("get_required_fees", [operations, "1.3.0"]));
+            promises.push(_cjs.Apis.instance().db_api().exec("get_objects", [[asset_id]]));
         }
 
         return Promise.all(promises).then(function (results) {
@@ -393,7 +393,7 @@ var TransactionBuilder = function () {
 
             asset = asset ? asset[0] : null;
 
-            var dynamicPromise = asset_id !== "1.3.0" && asset ? _ws.Apis.instance().db_api().exec("get_objects", [[asset.dynamic_asset_data_id]]) : new Promise(function (resolve, reject) {
+            var dynamicPromise = asset_id !== "1.3.0" && asset ? _cjs.Apis.instance().db_api().exec("get_objects", [[asset.dynamic_asset_data_id]]) : new Promise(function (resolve, reject) {
                 resolve();
             });
 
@@ -455,7 +455,7 @@ var TransactionBuilder = function () {
 
     TransactionBuilder.prototype.get_potential_signatures = function get_potential_signatures() {
         var tr_object = _serializer.ops.signed_transaction.toObject(this);
-        return Promise.all([_ws.Apis.instance().db_api().exec("get_potential_signatures", [tr_object]), _ws.Apis.instance().db_api().exec("get_potential_address_signatures", [tr_object])]).then(function (results) {
+        return Promise.all([_cjs.Apis.instance().db_api().exec("get_potential_signatures", [tr_object]), _cjs.Apis.instance().db_api().exec("get_potential_address_signatures", [tr_object])]).then(function (results) {
             return { pubkeys: results[0], addys: results[1] };
         });
     };
@@ -466,7 +466,7 @@ var TransactionBuilder = function () {
         }
         var tr_object = _serializer.ops.signed_transaction.toObject(this);
         //DEBUG console.log('... tr_object',tr_object)
-        return _ws.Apis.instance().db_api().exec("get_required_signatures", [tr_object, available_keys]).then(function (required_public_keys) {
+        return _cjs.Apis.instance().db_api().exec("get_required_signatures", [tr_object, available_keys]).then(function (required_public_keys) {
             //DEBUG console.log('... get_required_signatures',required_public_keys)
             return required_public_keys;
         });
@@ -506,7 +506,7 @@ var TransactionBuilder = function () {
     };
 
     TransactionBuilder.prototype.sign = function sign() {
-        var chain_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _ws.Apis.instance().chain_id;
+        var chain_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _cjs.Apis.instance().chain_id;
 
         if (!this.tr_buffer) {
             throw new Error("not finalized");
@@ -586,7 +586,7 @@ function _broadcast(was_broadcast_callback) {
 
         var tr_object = _serializer.ops.signed_transaction.toObject(_this5);
         // console.log('... broadcast_transaction_with_callback !!!')
-        _ws.Apis.instance().network_api().exec("broadcast_transaction_with_callback", [function (res) {
+        _cjs.Apis.instance().network_api().exec("broadcast_transaction_with_callback", [function (res) {
             return resolve(res);
         }, tr_object]).then(function () {
             //console.log('... broadcast success, waiting for callback')

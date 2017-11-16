@@ -12,7 +12,7 @@ var _ecc = require('../../ecc');
 
 var _serializer = require('../../serializer');
 
-var _ws = require('../../ws');
+var _cjs = require('../../ws/cjs');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44,7 +44,7 @@ helper.to_json = function (tr) {
     return function (tr, broadcast) {
         var tr_object = _serializer.ops.signed_transaction.toObject(tr);
         if (broadcast) {
-            var net = _ws.Apis.instance().network_api();
+            var net = _cjs.Apis.instance().network_api();
             console.log('... tr_object', JSON.stringify(tr_object));
             return net.exec("broadcast_transaction", [tr_object]);
         } else {

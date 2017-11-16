@@ -24,7 +24,7 @@ var _secureRandom = require('secure-random');
 
 var _secureRandom2 = _interopRequireDefault(_secureRandom);
 
-var _ws = require('../../ws');
+var _cjs = require('../../ws/cjs');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -199,7 +199,7 @@ var key = {
 
     // @return array of 5 legacy addresses for a pubkey string parameter.
     addresses: function addresses(pubkey) {
-        var address_prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _ws.ChainConfig.address_prefix;
+        var address_prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _cjs.ChainConfig.address_prefix;
 
         var public_key = _PublicKey2.default.fromPublicKeyString(pubkey, address_prefix);
         // S L O W
