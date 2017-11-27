@@ -14,14 +14,15 @@
     "test:watch": "npm test -- --watch",
     "clean": "rm -rf ./dist/* & rm -rf ./build/* & rm -rf ./es/*",
     "prebuild": "npm run clean",
-    "build": "BABEL_ENV=cjs babel lib -d dist",
+    "build": "BABEL_ENV=cjs babel lib -d compiled",
+    "bundle": "rollup -c rollup.config.ts",
+    "pack": "webpack --config webpack.config.js",
     "build-es": "BABEL_ENV=es babel lib -d es",
     "postbuild": "npm run build-es",
     "build:watch": "babel lib -d dist --watch",
     "prebrowserify": "rm -rf ./build/*",
     "browserify": "browserify --full-paths dist/browser.js --standalone steemJS -o build/decentjs-lib.js -d",
     "postbrowserify": "uglifyjs --compress --mangle --sequences --drop_console --output build/decentjs-lib.min.js -- build/decentjs-lib.js",
-    "prepublish": "npm run build",
     "doc": "esdoc -c esdoc.json",
     "example:transfer": "babel-node examples/transfer",
     "example:chainStore": "babel-node examples/chainStore",
@@ -44,9 +45,10 @@
   "engines": {
     "node": ">= 6.0.0"
   },
-  "main": "./dist/index.js",
+  "main": "./dist/bundle.js",
   "jsnext:main": "./es/index.js",
   "dependencies": {
+    "ReconnectingWebSocket": "git+https://github.com/bitshares/reconnecting-websocket.git",
     "bigi": "^1.4.1",
     "bs58": "^3.0.0",
     "bytebuffer": "^5.0.0",
@@ -58,10 +60,10 @@
     "event-emitter": "^0.3.4",
     "immutable": "^3.7.6",
     "secure-random": "^1.1.1",
-    "ReconnectingWebSocket": "git+https://github.com/bitshares/reconnecting-websocket.git",
     "ws": "^1.1.1"
   },
   "devDependencies": {
+    "@types/node": "8.0.53",
     "assert": "^1.3.0",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
@@ -72,6 +74,14 @@
     "browserify": "^13.1.0",
     "esdoc": "^0.4.3",
     "mocha": "^3.2.0",
-    "uglifyjs": "^2.4.10"
+    "rollup": "0.51.8",
+    "rollup-plugin-babel": "3.0.2",
+    "rollup-plugin-commonjs": "8.2.6",
+    "rollup-plugin-json": "2.3.0",
+    "rollup-plugin-node-builtins": "2.1.2",
+    "rollup-plugin-node-globals": "1.1.0",
+    "rollup-plugin-node-resolve": "3.0.0",
+    "uglifyjs": "^2.4.10",
+    "webpack": "3.8.1"
   }
 }
