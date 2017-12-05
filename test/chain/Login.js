@@ -1,6 +1,6 @@
 import assert from "assert";
-import {Login as login} from "../../lib";
-import {Login as login2} from "../../lib";
+import {Login as login} from "../../src";
+import {Login as login2} from "../../src";
 
 var auths = {
     active: [

@@ -1,13 +1,13 @@
-import Convert from '../../lib/serializer/src/convert';
+import Convert from '../../src/serializer/src/convert';
 import {Long} from 'bytebuffer';
 
 import assert from 'assert';
-import p from '../../lib/serializer/src/precision';
+import p from '../../src/serializer/src/precision';
 import th from './test_helper';
 
 import { is } from "immutable";
-import { PublicKey, PrivateKey, types } from "../../lib";
-import { ChainConfig } from "../../lib/ws";
+import { PublicKey, PrivateKey, types } from "../../src";
+import { ChainConfig } from "../../src/ws";
 
 describe("types", function() {
 

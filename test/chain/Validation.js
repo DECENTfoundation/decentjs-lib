@@ -1,4 +1,4 @@
-import { ChainValidation } from "../../lib";
+import { ChainValidation } from "../../src";
 import assert from "assert";
 
 describe("ChainValidation", () => {

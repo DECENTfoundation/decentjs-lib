@@ -1,5 +1,5 @@
 import assert from "assert";
-import { NumberUtils } from "../../lib";
+import { NumberUtils } from "../../src";
 
 describe("Number utils", () => {
 

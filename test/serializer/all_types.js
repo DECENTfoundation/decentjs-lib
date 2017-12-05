@@ -1,4 +1,4 @@
-import { PrivateKey, PublicKey, Address, Serializer, ops, types } from "../../lib";
+import { PrivateKey, PublicKey, Address, Serializer, ops, types } from "../../src";
 import assert from 'assert';
 
 var {

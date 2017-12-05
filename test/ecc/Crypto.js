@@ -1,4 +1,4 @@
-import { Aes, PrivateKey, PublicKey, Signature, hash, key } from "../../lib";
+import { Aes, PrivateKey, PublicKey, Signature, hash, key } from "../../src";
 import assert from "assert";
 import {Long} from 'bytebuffer';
 
