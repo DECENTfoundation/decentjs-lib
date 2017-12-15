@@ -12,10 +12,9 @@
     "test:ecc": "BABEL_ENV=test mocha --compilers js:babel-register ./test/ecc --recursive",
     "test:serializer": "BABEL_ENV=test mocha --compilers js:babel-register ./test/serializer --recursive",
     "test:watch": "npm test -- --watch",
-    "clean": "rm -rf ./dist/* & rm -rf ./build/* & rm -rf ./es/*",
+    "clean": "rm -rf ./dist/* & rm -rf ./lib/*",
     "prebuild": "npm run clean",
-    "build": "BABEL_ENV=cjs babel lib -d compiled",
-    "bundle": "rollup -c rollup.config.ts",
+    "build": "BABEL_ENV=cjs babel src -d lib && npm run pack",
     "pack": "webpack --config webpack.config.js",
     "build-es": "BABEL_ENV=es babel lib -d es",
     "postbuild": "npm run build-es",
@@ -45,7 +44,7 @@
   "engines": {
     "node": ">= 6.0.0"
   },
-  "main": "./dist/bundle.js",
+  "main": "./lib/index.js",
   "jsnext:main": "./es/index.js",
   "dependencies": {
     "ReconnectingWebSocket": "git+https://github.com/bitshares/reconnecting-websocket.git",
