@@ -9,6 +9,8 @@ if (typeof WebSocket === "undefined" && !process.env.browser) {
     WebSocketClient = require("ws");
 } else if (typeof WebSocket !== "undefined" && typeof document !== "undefined") {
     WebSocketClient = require("ReconnectingWebSocket");
+} else if (process.env.NODE_ENV === 'test') {
+    WebSocketClient = require("ws");
 } else {
     WebSocketClient = WebSocket;
 }
