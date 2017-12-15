@@ -1,10 +1,11 @@
 const path = require('path');
 
 module.exports = {
-  entry: './lib/index.js',
+  entry: './src/index.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    library: 'decentjs-lib'
   }
 };

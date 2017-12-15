@@ -1,6 +1,6 @@
 import assert from "assert";
-import {Apis, ChainConfig} from "../../lib/ws";
-import { FetchChain, ChainStore } from "../../lib";
+import {Apis, ChainConfig} from "../../src/ws";
+import { FetchChain, ChainStore } from "../../src";
 
 var coreAsset;
 
