@@ -56,7 +56,7 @@
     "event-emitter": "^0.3.4",
     "immutable": "^3.7.6",
     "secure-random": "^1.1.1",
-    "ws": "^1.1.1"
+    "ws": "3.3.3"
   },
   "devDependencies": {
     "@types/node": "^8.0.53",
