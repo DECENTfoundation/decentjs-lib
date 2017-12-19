@@ -1,4 +1,4 @@
-import { Aes, PrivateKey, PublicKey, Address } from "../../lib";
+import { Aes, PrivateKey, PublicKey, Address } from "../../src";
 import assert from "assert";
 
 var test = function(key) {

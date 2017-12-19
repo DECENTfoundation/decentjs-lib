@@ -62,7 +62,7 @@
   "scripts": {
     "browserify": "NODE_ENV=production browserify cjs/src/ApiInstances.js --standalone grapheneWS -o build/decentjs-ws.js -d",
     "build": "BABEL_ENV=cjs babel lib --out-dir cjs",
-    "build-es": "BABEL_ENV=es babel ./lib -d es",
+    "build-es": "BABEL_ENV=es babel ./src -d es",
     "bundle": "npm run browserify && npm run minify",
     "clean": "rm -rf ./cjs/* & rm -rf ./build/* & rm -rf ./es/*",
     "postbrowserify": "NODE_ENV=production uglifyjs --compress --mangle --sequences --drop_console --mangle-props --screw-ie8 --output build/decentjs-ws.min.js -- build/decentjs-ws.js",
