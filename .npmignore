@@ -1,0 +1,9 @@
+node_modules/
+es/
+compiled/
+.idea
+src/
+tools/
+test/
+esdoc.json
+CHANGELOG.md
