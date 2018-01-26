@@ -1,3 +1,7 @@
+This repository is obsolete, use https://github.com/DECENTfoundation/dcorejs-lib
+
+----
+
 # GrapheneJS (graphenejs-lib)
 
 ## ATTN: If you're looking to use this with Bitshares, please [bitsharesjs](https://github.com/bitshares/bitsharesjs) instead.
